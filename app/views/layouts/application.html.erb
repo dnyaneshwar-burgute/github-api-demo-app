@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GithubApiDemoApp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class=<%= controller_name%>>
+    <div id='wrapper' class=<%="#{params[:controller]} #{params[:action]}"%>>
+      <!-- sidebar will add if necessory -->
+      <%#= render 'layouts/sidebar' %>
+
+      <!-- a wrapper element  -->
+      <div id='page-wrapper' role='main' class=<%= (@extra_class.present?) ? 'main gray-bg #{@extra_class}' : 'main gray-bg'%>>
+        <div class='header'>
+          <%= render 'layouts/header'%>
+        </div>
+        <%= render 'layouts/messages'%>
+        <% if current_user %>
+          <div class='page-container col-md-12 '>
+            <div class='pull-right'>
+              <%= "Welcome #{current_user.name}" %> &nbsp;&nbsp;<%= link_to "Sign out", "/signout"%>
+            </div>
+            <%= yield%>
+          </div>
+        <% else %>
+          <div class='page-container col-md-12'>
+            <%= link_to "Sign in with Github", "/auth/github", class: 'btn btn-primary sign-in-button'%>
+          </div>
+        <% end %>
+        <div class='footer'>
+          <%= render 'layouts/footer' %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
