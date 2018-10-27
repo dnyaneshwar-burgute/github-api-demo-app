@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 2.5'
 # omniauth-github
 gem 'github_api'
 gem 'omniauth-github'
+gem 'factory_bot_rails'
+gem 'rubocop-rspec'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -38,6 +40,7 @@ gem 'omniauth-github'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'rspec-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'awesome_print'
   gem 'byebug', platform: :mri
@@ -53,5 +56,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :test do
+  gem 'shoulda'
+  gem 'database_cleaner'
+  gem 'parallel_tests'
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
