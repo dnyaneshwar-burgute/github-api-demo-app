@@ -27,6 +27,25 @@ require 'shoulda/matchers'
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
+OmniAuth.config.test_mode = true
+  omniauth_hash = { 'provider' => 'github',
+    'uid' => '12345',
+    'info' => {
+      'name' => 'dnyaneshwar-burgute',
+      'email' => 'hi@natashatherobot.com',
+      'nickname' => 'NatashaTheRobot'
+    },
+    'credentials' => {
+      'token' => 'abcd12345678',
+      'expired' => false
+    },
+    'extra' => {'raw_info' =>
+      { 'location' => 'India',
+        'gravatar_id' => '123456789'
+      }
+    }
+  }
+OmniAuth.config.add_mock(:github, omniauth_hash)
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e

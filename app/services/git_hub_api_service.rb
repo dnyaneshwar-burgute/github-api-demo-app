@@ -7,7 +7,7 @@ class GitHubApiService
   def get_data
     private_repos = []
     public_repos = []
-    repos = Github::Client::Repos.new aouth_token: @token, user: @user.login
+    repos = Github::Client::Repos.new oauth_token: @token, user: @user.login
     repos.list.each do |repo|
       if repo['private']
         private_repos << set_repo_data(repo)
@@ -34,10 +34,14 @@ class GitHubApiService
 
     def get_repo_commits(repo)
       commits_data = []
-      commits = Github::Client::Repos::Commits.new aouth_token: @token
-      lists = commits.list user: @user.login, repo: repo[:name], sha: 'master'
-      lists.each do |commit|
-        commits_data << set_commit_data(commit)
+      begin
+        commits = Github::Client::Repos::Commits.new oauth_token: @token
+        lists = commits.list user: @user.login, repo: repo[:name], sha: 'master'
+        lists.each do |commit|
+          commits_data << set_commit_data(commit)
+        end
+      rescue
+        puts "==============TO DO (solve issue of repo with no commits)==========="
       end
       commits_data
     end
