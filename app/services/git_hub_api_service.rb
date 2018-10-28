@@ -7,7 +7,7 @@ class GitHubApiService
   def get_data
     private_repos = []
     public_repos = []
-    repos = Github::Client::Repos.new oauth_token: @token, user: @user.login
+    repos = Github::Client::Repos.new oauth_token: @token
     repos.list.each do |repo|
       if repo['private']
         private_repos << set_repo_data(repo)

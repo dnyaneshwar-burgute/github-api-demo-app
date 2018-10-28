@@ -16,24 +16,7 @@
               <dt>Description</dt>
               <dd><%= repo[:description] %></dd>
             </dl>
-
-            <dt>Commits</dt>
-            <table class='table table-borderd'>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Message</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% repo[:commits].each do |commit| %>
-                  <tr>
-                    <td><%= commit[:date].to_datetime %></td>
-                    <td><%= commit[:message] %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
+            <%= render 'commits', commits: repo[:commits] %>
           </div>
         <% end %>
       <% else %>
@@ -60,8 +43,8 @@
               <dt>Description</dt>
               <dd><%= repo[:description] %></dd>
 
-              <dt>Commits</dt>
-              </dd><%= repo[:commits] %></dd>
+              <%= render 'commits', commits: repo[:commits] %>
+
             </dl>
           </div>
         <% end %>

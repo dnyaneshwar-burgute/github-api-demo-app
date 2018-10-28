@@ -1,0 +1,17 @@
+<dt>Commits</dt>
+<table class='table table-borderd'>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% commits.each do |commit| %>
+      <tr>
+        <td><%= commit[:date].to_datetime %></td>
+        <td><%= commit[:message] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
