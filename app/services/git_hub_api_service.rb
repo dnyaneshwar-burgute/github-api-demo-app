@@ -18,12 +18,32 @@ class GitHubApiService
     return private_repos, public_repos
   end
 
+  def get_repo_commits(repo, start_date, end_date)
+      commits_data = []
+      branches_info = {}
+      begin
+        commits = Github::Client::Repos::Commits.new oauth_token: @token
+        branches = Github::Client::Repos::Branches.new oauth_token: @token
+        branch_lists = branches.list user: @user.login, repo: repo
+
+        branch_lists.body.each do |branch|
+          branches_info["#{branch.name}".to_s] = []
+          branch_commits = commits.list user: @user.login, repo: repo, start_date: start_date, end_date: end_date, sha: branch.name
+          branch_commits.each do |comm|
+            branches_info["#{branch.name}".to_s].push(set_commit_data(comm))
+          end
+        end
+        commits_data.push(branches_info)
+      rescue
+        puts "==============TO DO (solve issue of repo with no commits)==========="
+      end
+      commits_data
+    end
+
   private
 
     def set_repo_data(repo)
-      repo_data = get_repo_data(repo)
-      commits = get_repo_commits(repo_data)
-      repo_data.merge!({commits: commits})
+      get_repo_data(repo)
     end
 
     def get_repo_data(repo)
@@ -32,19 +52,7 @@ class GitHubApiService
         private: repo['private'], description: repo['description'] }
     end
 
-    def get_repo_commits(repo)
-      commits_data = []
-      begin
-        commits = Github::Client::Repos::Commits.new oauth_token: @token
-        lists = commits.list user: @user.login, repo: repo[:name], sha: 'master'
-        lists.each do |commit|
-          commits_data << set_commit_data(commit)
-        end
-      rescue
-        puts "==============TO DO (solve issue of repo with no commits)==========="
-      end
-      commits_data
-    end
+
 
     def set_commit_data(data)
       { name: data['commit']['committer']['name'],

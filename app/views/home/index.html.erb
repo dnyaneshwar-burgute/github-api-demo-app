@@ -16,7 +16,9 @@
               <dt>Description</dt>
               <dd><%= repo[:description] %></dd>
             </dl>
-            <%= render 'commits', commits: repo[:commits] %>
+            <%= link_to "Show Commit Graph", repo_commmits_path(repo: repo[:name],
+            start_date: DateTime.now - 1.year, end_date: DateTime.now), remote: true %>
+            <%#= render 'commits', commits: repo[:commits] %>
           </div>
         <% end %>
       <% else %>
@@ -43,7 +45,7 @@
               <dt>Description</dt>
               <dd><%= repo[:description] %></dd>
 
-              <%= render 'commits', commits: repo[:commits] %>
+              <%#= render 'commits', commits: repo[:commits] %>
 
             </dl>
           </div>
