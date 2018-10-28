@@ -19,6 +19,7 @@ gem 'coffee-rails', '~> 4.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # add bootstrap
 gem 'bootstrap-sass', '3.3.7'
 

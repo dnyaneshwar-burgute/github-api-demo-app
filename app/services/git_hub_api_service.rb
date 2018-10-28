@@ -29,7 +29,7 @@ class GitHubApiService
     def get_repo_data(repo)
       { id: repo['id'], node_id: repo['node_id'],
         name: repo['name'], full_name: repo['full_name'],
-        private: repo['private'] }
+        private: repo['private'], description: repo['description'] }
     end
 
     def get_repo_commits(repo)

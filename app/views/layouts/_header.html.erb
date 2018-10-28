@@ -13,6 +13,9 @@
         </a>
         <a href="#">GithubApiDemoApp</a>
       </div>
+      <div class='sign-out pull-right'>
+        <%= "Welcome #{current_user.name}" %> &nbsp;&nbsp;<%= link_to "Sign out", "/signout"%>
+      </div>
     </div>
   </div>
 </nav>

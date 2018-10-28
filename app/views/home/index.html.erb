@@ -1,3 +1,76 @@
 <div class='row'>
+  <div class='col-md-6'>
+    <h2> Public Repos </h2>
+    <div id="public_repos">
+      <% if @public_repos.present? %>
+        <% @public_repos.each do |repo| %>
+          <h3><%= repo[:name] %></h3>
+          <div>
+            <dl>
+              <dt>Repo Id</dt>
+              <dd><%= repo[:id] %></dd>
+
+              <dt>Full Name</dt>
+              <dd><%= repo[:full_name] %></dd>
+
+              <dt>Description</dt>
+              <dd><%= repo[:description] %></dd>
+            </dl>
+
+            <dt>Commits</dt>
+            <table class='table table-borderd'>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% repo[:commits].each do |commit| %>
+                  <tr>
+                    <td><%= commit[:date].to_datetime %></td>
+                    <td><%= commit[:message] %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% else %>
+        <div>
+          <p> No Public repos...</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2> Private Repos </h2>
+    <div id="private_repos">
+      <% if @private_repos.present? %>
+        <% @private_repos.each do |repo| %>
+          <h3><%= repo[:name] %></h3>
+          <div>
+            <dl>
+              <dt>Repo Id</dt>
+              <dd><%= repo[:id] %></dd>
+
+              <dt>Full Name</dt>
+              <dd><%= repo[:full_name] %></dd>
+
+              <dt>Description</dt>
+              <dd><%= repo[:description] %></dd>
+
+              <dt>Commits</dt>
+              </dd><%= repo[:commits] %></dd>
+            </dl>
+          </div>
+        <% end %>
+      <% else %>
+        <div>
+          <p> No Private repos...</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
 </div>
