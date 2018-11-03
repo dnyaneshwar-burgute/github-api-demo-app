@@ -43,10 +43,9 @@
 
               <dt>Description</dt>
               <dd><%= repo[:description] %></dd>
-
-              <%#= render 'commits', commits: repo[:commits] %>
-
             </dl>
+            <hr/>
+            <%= render 'graph', repo_name: repo[:name] %>
           </div>
         <% end %>
       <% else %>
