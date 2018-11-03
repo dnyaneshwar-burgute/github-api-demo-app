@@ -1,0 +1,5 @@
+var data = <%=@repo_and_data.to_json.html_safe %>
+console.log(data['repo']);
+console.log(data['data'])
+$("#repo"+data['repo']).html("");
+drawChart(data['repo'], data['data']);

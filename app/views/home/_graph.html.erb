@@ -1,0 +1,17 @@
+<p> Gragh </p>
+<div>
+  <%= form_tag repo_commits_url, method: :post, remote: true, class: 'form-inline' do %>
+    <%= hidden_field_tag :repo, repo_name %>
+
+    <%= label_tag :start_date %>
+    <%= text_field_tag :start_date, nil, class: 'date-field' %>
+
+
+    <%= label_tag :end_date %>
+    <%= text_field_tag :end_date, nil, class: 'date-field' %>
+    <br/><br/>
+    <%= submit_tag 'Show Graph', class: 'show_graph', data: { repo: repo_name } %>
+  <% end %>
+</div>
+<div class='chart' id=<%= "repo#{repo_name}"%>>
+</div>

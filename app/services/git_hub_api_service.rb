@@ -44,8 +44,8 @@ class GitHubApiService
     branch_commits.each do |comm|
       commits_data.push(set_commit_data(comm))
     end
-    # Send only required data (date and commit count)
-    commits_data.each_with_object(Hash.new(0)) { |e, total| total[e[:date]] += 1 }
+    hash = commits_data.each_with_object(Hash.new(0)) { |e, total| { date: total[e[:date]] += 1 } }
+    hash.map { |k, v| {date: k, total: v} }
   end
 
   private

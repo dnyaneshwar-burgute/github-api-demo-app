@@ -1,18 +1,17 @@
+$(document).ready(function(){
+  $(".date-field").datepicker({
+    format: 'dd-mm-yyyy'
+  });
+});
 
-$(document).on('click', '.show_graph', function () {
-
-  var repo = $(this).attr('data-repo');
-  $("#repo"+repo).html("");
+$(document).on('click', '.show_graph', function (e) {
   var parent_div = $(this).parent();
   var start_date = $(parent_div).children('input#start_date').val();
-  var start_date = $(parent_div).children('input#end_date').val();
-  if (start_date == "" || end_date == "") {
-    alert("Please select the dates...");
-    return;
+  var end_date = $(parent_div).children('input#end_date').val();
+  if(start_date == "" || end_date == "") {
+    alert("Please select Dates..");
+    e.preventDefault();
   }
-  console.log("Start Date : " + start_date + ", End Date: " + end_date);
-  var data = getData({repo: repo, start_date: start_date, end_date: end_date});
-  drawChart(repo, data);
 });
 
 function drawChart(repo, data) {
@@ -27,8 +26,6 @@ function drawChart(repo, data) {
   data.forEach(function(d) {
     d.date = parseDate(d.date);
   });
-
-  debugger;
 
   var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
 
@@ -83,25 +80,4 @@ function drawChart(repo, data) {
     .attr("y", function(d) { return y(d.total); })
     .attr("height", function(d) { return height - y(d.total); });
 
-}
-
-function getData(params) {
-  // var result = $.ajax({
-  //   url: '/repo_commmits',
-  //   async: false,
-  //   dataType: 'json',
-  //   data: { repo: repo, start_date: start_date, end_date: end_date }
-  // }).responseJSON;
-  return [
-    {
-      date: '10-10-2016',
-      total: 5
-    },{
-      date: '10-11-2016',
-      total: 10
-    },{
-      date: '11-10-2017',
-      total: 20
-    }
-  ]
 }

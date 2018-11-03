@@ -8,11 +8,15 @@ class HomeController < ApplicationController
     end
   end
 
-  def repo_commmits
+  def repo_commits
     if current_user
       # TO DO (check params present or not)
       data = GitHubApiService.new(current_user, session[:token]).get_repo_commits(params[:repo], params[:start_date], params[:end_date])
-      render json: data
+      @repo_and_data = {repo: params[:repo], data: data }
+      respond_to do |format|
+        format.html
+        format.js { render layout: false, content_type: 'text/javascript' }
+      end
     end
   end
 end
