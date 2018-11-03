@@ -1,10 +1,10 @@
 <div class='row'>
-  <div class='col-md-6'>
+  <div class='col-md-12'>
     <h2> Public Repos </h2>
     <div id="public_repos">
       <% if @public_repos.present? %>
         <% @public_repos.each do |repo| %>
-          <h3><%= repo[:name] %></h3>
+          <h3> <%= repo[:name] %> </h3>
           <div>
             <dl>
               <dt>Repo Id</dt>
@@ -16,9 +16,17 @@
               <dt>Description</dt>
               <dd><%= repo[:description] %></dd>
             </dl>
-            <%= link_to "Show Commit Graph", repo_commmits_path(repo: repo[:name],
-            start_date: DateTime.now - 1.year, end_date: DateTime.now), remote: true %>
-            <%#= render 'commits', commits: repo[:commits] %>
+            <hr/>
+            <p> Gragh </p>
+            <div>
+              <%= label_tag :start_date %>
+              <%= text_field_tag :start_date %>
+              <%= label_tag :end_date %>
+              <%= text_field_tag :end_date %>
+              <%= button_tag :show_graph, class: 'show_graph', data: { repo: repo[:name] } %>
+            </div>
+            <div id=<%= "repo#{repo[:name]}"%>>
+            </div>
           </div>
         <% end %>
       <% else %>
@@ -28,7 +36,7 @@
       <% end %>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <h2> Private Repos </h2>
     <div id="private_repos">
       <% if @private_repos.present? %>

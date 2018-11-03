@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= common
+//= d3.min
 //= require_tree .

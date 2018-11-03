@@ -18,9 +18,7 @@ class GitHubApiService
     return private_repos, public_repos
   end
 
-  def get_repo_commits(repo, start_date, end_date)
-      commits_data = []
-      branches_info = {}
+=begin branches_info = {}
       begin
         commits = Github::Client::Repos::Commits.new oauth_token: @token
         branches = Github::Client::Repos::Branches.new oauth_token: @token
@@ -28,7 +26,7 @@ class GitHubApiService
 
         branch_lists.body.each do |branch|
           branches_info["#{branch.name}".to_s] = []
-          branch_commits = commits.list user: @user.login, repo: repo, start_date: start_date, end_date: end_date, sha: branch.name
+          branch_commits = commits.list user: @user.login, repo: repo, since: start_date, until: end_date, sha: branch.name
           branch_commits.each do |comm|
             branches_info["#{branch.name}".to_s].push(set_commit_data(comm))
           end
@@ -37,8 +35,18 @@ class GitHubApiService
       rescue
         puts "==============TO DO (solve issue of repo with no commits)==========="
       end
-      commits_data
+=end
+  # Make it simple commits only for master branch
+  def get_repo_commits(repo, start_date, end_date)
+    commits_data = []
+    commits = Github::Client::Repos::Commits.new oauth_token: @token
+    branch_commits = commits.list user: @user.login, repo: repo, since: start_date, until: end_date, sha: :master
+    branch_commits.each do |comm|
+      commits_data.push(set_commit_data(comm))
     end
+    # Send only required data (date and commit count)
+    commits_data.each_with_object(Hash.new(0)) { |e, total| total[e[:date]] += 1 }
+  end
 
   private
 
@@ -57,7 +65,7 @@ class GitHubApiService
     def set_commit_data(data)
       { name: data['commit']['committer']['name'],
         email: data['commit']['committer']['email'],
-        date: data['commit']['committer']['date'],
+        date: data['commit']['committer']['date'].to_date.strftime('%d-%m-%Y'),
         message: data['commit']['message'] }
     end
 end
