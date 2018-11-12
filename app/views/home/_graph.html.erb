@@ -4,11 +4,11 @@
     <%= hidden_field_tag :repo, repo_name %>
 
     <%= label_tag :start_date %>
-    <%= text_field_tag :start_date, nil, class: 'date-field' %>
+    <%= text_field_tag :start_date, nil, id: "start_date_#{repo_name}", class: 'date-field', autocomplete: 'off' %>
 
 
     <%= label_tag :end_date %>
-    <%= text_field_tag :end_date, nil, class: 'date-field' %>
+    <%= text_field_tag :end_date, nil, id: "end_date_#{repo_name}", class: 'date-field', autocomplete: 'off' %>
     <br/><br/>
     <%= submit_tag 'Show Graph', class: 'show_graph', data: { repo: repo_name } %>
   <% end %>
